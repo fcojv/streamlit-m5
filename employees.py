@@ -104,9 +104,10 @@ employees_by_unit = data[['employee_id','unit']].groupby('unit').count()
 st.subheader("Número de empleados por unidad")
 st.bar_chart(employees_by_unit)
 
-employees_by_hometown = data.groupby(['hometown']).mean()
+employees_by_hometown = data[['employee_id','hometown','attrition_rate']].groupby('hometown')
+employees_by_hometown = employees_by_hometown['attrition_rate'].sum()/employees_by_hometown['employee_id'].count()
 st.subheader("Ciudades con mayor índice de deserción")
-st.line_chart(employees_by_hometown.loc[:,'attrition_rate'])
+st.line_chart(employees_by_hometown)
 
 data.plot(kind='scatter', x='age', y='attrition_rate')
 
